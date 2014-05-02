@@ -1,29 +1,24 @@
-// Create the configuration
+var irc = require('irc');
 
-var config = {
-	channels: ["#pietsbottest"],
-	server: "irc.freenode.net",
-	clientName: "WhatBot",
-	debug: true,
-	autoRejoin: false,
-	autoConnect: true
-};
-
-// Get the lib
-var irc = require("irc");
-var fs = require("fs");
-var date = new Date();
 var botlisteners = require('./botlisteners');
 
-var myAdmin = "Pietdagamer"
+var server = 'irc.freenode.net';
+var myNick = 'WhatBot';
+var channels = ['#pietsbottest'];
 
-// Create the client name
-var client = new irc.Client(config.server, config.clientName, config, {
-	channels: config.channels
+var myAdmin = 'Pietdagamer';
+
+var client = new irc.Client(server, myNick, {
+    channels: channels
+  , autoRejoin: true
+  , autoConnect: false
+  , debug: true
+  , userName: myNick
+  , realName: myNick
 });
 
-client.addListener('pm', function(nick, text, message) {
-  if(nick == myAdmin && text == "reload") {
+client.addListener('pm', function(from, text, message) {
+  if(from == myAdmin && text == "reload") {
     
     // Unload all listeners
     botlisteners.unload(client);
@@ -35,7 +30,7 @@ client.addListener('pm', function(nick, text, message) {
     // Attach the listeners
     botlisteners.load(client);
 
-    client.say(nick, "reload complete");
+    client.say(from, "reload complete");
   }
 });
 
@@ -47,10 +42,6 @@ client.on("notice", function(nick, to, text, message) {
 
 client.addListener('error', function(message) {
   console.log('error: ', message);
-});
-
-client.on('message', function(nick, to, text, message) {
-  console.log("[" + to + "] " + nick + ": " + text);
 });
 
 client.connect(function() {
