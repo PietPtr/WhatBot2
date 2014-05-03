@@ -1,3 +1,5 @@
+//TODO: !join / !leave
+
 var irc = require('irc');
 
 var botlisteners = require('./botlisteners');
