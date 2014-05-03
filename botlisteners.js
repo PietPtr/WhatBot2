@@ -1,7 +1,9 @@
 
 var modules = [
     'whatbot-help',
-    'whatbot-quote'
+    'whatbot-quote',
+    'whatbot-joinleave',
+    'whatbot-stats'
 ];
 
 var BotListeners = function() {
