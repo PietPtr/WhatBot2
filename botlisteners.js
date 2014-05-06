@@ -2,8 +2,7 @@
 var modules = [
     'whatbot-help',
     'whatbot-quote',
-    'whatbot-joinleave',
-    'whatbot-mail'
+    'whatbot-joinleave'
 ];
 
 var BotListeners = function() {
